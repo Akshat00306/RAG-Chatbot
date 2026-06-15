@@ -5,11 +5,7 @@ import warnings
 import streamlit as st
 
 from langchain_groq import ChatGroq
-try:
-    from langchain_huggingface import HuggingFaceEmbeddings
-except ImportError:
-    from langchain_community.embeddings import HuggingFaceEmbeddings
-
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
