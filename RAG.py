@@ -2,7 +2,10 @@ import os
 import hashlib
 import tempfile
 import warnings
+from pathlib import Path
+
 import streamlit as st
+from dotenv import load_dotenv
 
 from langchain_groq import ChatGroq
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -11,6 +14,10 @@ from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 warnings.filterwarnings("ignore")
+
+# Load environment variables from .env when running from the app folder.
+project_root = Path(__file__).resolve().parent.parent
+load_dotenv(project_root / ".env")
 
 st.set_page_config(page_title="RAG Chatbot", layout="wide")
 st.title("RAG Chatbot")
@@ -54,7 +61,10 @@ def get_llm():
             "GROQ_API_KEY is not set. Add it in .streamlit/secrets.toml or export it as an environment variable."
         )
 
-    return ChatGroq(model_name="llama-3.1-8b-instant", groq_api_key=groq_api_key)
+    return ChatGroq(
+        model_name="llama-3.1-8b-instant",
+        groq_api_key=groq_api_key,
+    )
 
 
 def get_file_id(file_bytes, file_name):
